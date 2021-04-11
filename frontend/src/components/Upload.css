@@ -1,0 +1,23 @@
+.general {
+  /* background-color: #734943; */
+  /* padding: 6px; */
+  color: #3d393b;
+  text-align: center;
+}
+
+.input {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.label {
+  display: inline-block;
+  text-align: center;
+  /* margin: 20px; */
+  padding: 6px 8px;
+  background-color: #ffffff;
+  border: solid 2px #3d393b;
+  border-radius: 6px;
+  color: #3d393b;
+}
