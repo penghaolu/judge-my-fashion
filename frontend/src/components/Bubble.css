@@ -1,31 +1,27 @@
-
-
-
 .bubble {
-    box-shadow: 0px 0px 15px 5px #e68282, 0 0 0 15px #f2a1a160;
-    width: 250px;
-    height: 100px;
-    color: white;
-    border-radius: 100px;
-    font-family: inherit;
-    margin: 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: #f55d6cb1;
+  box-shadow: 0px 0px 15px 5px #b6857c, 0 0 0 15px #f6f0ef;
+  width: 30%;
+  height: 100px;
+  color: white;
+  border-radius: 100px;
+  font-family: inherit;
+  margin: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #734943;
 }
 
 p {
-    margin: 30px;
-    font-size: 1.5rem;
+  margin: 30px;
+  font-size: 1.5rem;
 }
 
 .type {
-    color: white;
+  color: white;
 }
 
 .percentage {
-    color: white;
-    padding-left: 30px;
+  color: white;
 }
