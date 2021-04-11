@@ -4,11 +4,14 @@ import "./Upload.css";
 
 function Upload(props) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadReady, setUploadReady] = useState(false);
+  const [roastReady, setRoastReady] = useState(false);
 
   // On file select (from the pop up)
   function onFileChange(event) {
     // Update the state
     setSelectedFile(event.target.files[0]);
+    setUploadReady(true);
   }
 
   // On file upload (click the upload button)
@@ -34,6 +37,8 @@ function Upload(props) {
       .catch((error) => {
         console.log("Error:", error);
       });
+    setUploadReady(false);
+    setRoastReady(true);
   }
 
   function getResults() {
@@ -42,13 +47,14 @@ function Upload(props) {
       .then((response) => {
         console.log(response);
         let percentages = response.data.map((elem) => {
-          return Math.trunc(elem * 100);
+          return (elem * 100).toFixed(2);
         });
         props.setSeries(percentages);
       })
       .catch((error) => {
         console.log("Error:", error);
       });
+    setRoastReady(false);
   }
 
   // File content to be displayed after
@@ -56,14 +62,16 @@ function Upload(props) {
   function fileData() {
     if (selectedFile) {
       return (
-        <div className="general">
-          <h2>File Details:</h2>
+        <div className="details">
+          <h3>File Details:</h3>
 
-          <p>File Name: {selectedFile.name}</p>
+          <p className="details">File Name: {selectedFile.name}</p>
 
-          <p>File Type: {selectedFile.type}</p>
+          <p className="details">File Type: {selectedFile.type}</p>
 
-          <p>Last Modified: {selectedFile.lastModifiedDate.toDateString()}</p>
+          <p className="details">
+            Last Modified: {selectedFile.lastModifiedDate.toDateString()}
+          </p>
         </div>
       );
     } else {
@@ -77,17 +85,29 @@ function Upload(props) {
 
   return (
     <div className="general">
-      <h3>feed me ur fit pics</h3>
+      <h2>i'm a mean neural net</h2>
+      <h2>feed me ur best fit pic and i'll roast them</h2>
       <div>
         <label className="label">
-          click here to pick fit pic
+          <div className="container">click here to pick ur fit pic</div>
           <input className="input" type="file" onChange={onFileChange} />
         </label>
       </div>
       {fileData()}
-      <button onClick={onFileUpload}>upload my ugly photo please</button>
+      {uploadReady && (
+        <button className="button" onClick={onFileUpload}>
+          upload my ugly photo please
+        </button>
+      )}
       <br />
-      <button onClick={getResults}>i'm ready, roast me</button>
+      {roastReady && (
+        <div>
+          <h4>pic succesfully uploaded</h4>
+          <button className="button" onClick={getResults}>
+            i'm ready, roast me
+          </button>
+        </div>
+      )}
     </div>
   );
 }

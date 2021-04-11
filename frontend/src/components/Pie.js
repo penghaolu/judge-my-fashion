@@ -5,7 +5,7 @@ import Bubble from "./Bubble";
 function Pie(props) {
   const settings = props.settings || {
     chart: {
-      width: 380,
+      width: 800,
       type: "pie",
     },
     labels: ["grunge", "island vacation", "formal", "preppy", "techwear"],
@@ -25,13 +25,24 @@ function Pie(props) {
   };
 
   return (
-    <div stlye={{ display: "flex", flex: "1", flexDirection: "row" }}>
+    <div
+      style={{
+        display: "flex",
+        flex: "1",
+        flexDirection: "row",
+        margin: "auto",
+        justifyContent: "center",
+      }}
+    >
       <div>
+        <h3 style={{ transform: "translateX(-5px)" }}>
+          among the five categories, you are:
+        </h3>
         <Chart
           options={settings}
-          series={props.series}
+          series={props.series.map((x) => Math.trunc(x))}
           type="pie"
-          width={props.width || 380}
+          width={500}
         />
       </div>
       <div>
