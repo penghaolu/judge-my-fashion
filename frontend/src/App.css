@@ -85,3 +85,9 @@ body {
   color: #3d393b;
   font-size: 600%;
 }
+
+.pie {
+  align-content: center;
+  justify-content: center;
+  margin: auto;
+}

@@ -7,7 +7,7 @@ function Pie(props) {
       width: 380,
       type: "pie",
     },
-    labels: ["grunge", "hawaiian", "mens semi-formal", "preppy", "techwear"],
+    labels: ["grunge", "island vacation", "mens formal", "preppy", "techwear"],
     responsive: [
       {
         breakpoint: 480,

@@ -1,13 +1,7 @@
 import React from "react";
 
 function Insult(props) {
-  const labels = [
-    "grunge",
-    "hawaiian",
-    "mens semi-formal",
-    "preppy",
-    "techwear",
-  ];
+  const labels = ["grunge", "island vacation", "formal", "preppy", "techwear"];
   const i = props.series.indexOf(Math.max(...props.series));
   return (
     <div>

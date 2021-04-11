@@ -5,7 +5,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from flask_cors import CORS
 import json
-
+import numpy as np
 import sys
 
 sys.path.insert(0, "../")
@@ -52,12 +52,14 @@ def upload_file():
         if file.filename == "":
             flash("No selected file")
             return redirect(request.url)
+        # if file.type == "image/png":
+        # drop channel
+
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             file.save(path)
-            with Image.open(path) as img:
-                img.show()
+            # with Image.open(path) as img: img.show()
             return redirect(url_for("results", filename=filename))
     return """
     <!doctype html>
@@ -74,9 +76,9 @@ def upload_file():
 def results():
     filename = request.args.get("filename")
     path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-    im = plt.imread(path)
-
-    res = judge.get_fashion_results(im)
+    im = Image.open(path)
+    rgb_im = np.array(im.convert("RGB"))
+    res = judge.get_fashion_results(rgb_im)
     res = res.tolist()
 
     return json.dumps(res)
