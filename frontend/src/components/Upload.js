@@ -13,15 +13,10 @@ function Upload() {
 
   // On file upload (click the upload button)
   function onFileUpload() {
-    // const data = new FormData();
-    // data.append('file', this.uploadInput.files[0]);
-    // data.append('filename', this.fileName.value);
-
     // Create an object of formData
     const formData = new FormData();
 
     // Update the formData object
-    // formData.append("myFile", selectedFile, selectedFile.name);
     formData.append("file", selectedFile);
     formData.append("filename", selectedFile.name);
 
@@ -70,7 +65,6 @@ function Upload() {
     } else {
       return (
         <div className="general">
-          <br />
           <h4>select an image</h4>
         </div>
       );
