@@ -74,4 +74,4 @@ def results():
 
     res = judge.get_fashion_results(im)
 
-    return str(res)
+    return res
