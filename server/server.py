@@ -3,6 +3,13 @@ from werkzeug.utils import secure_filename
 import os
 from PIL import Image
 
+import sys
+sys.path.insert(0, '../')
+
+# from judge_fashion import JudgeFashion
+
+# judge = JudgeFashion()
+
 UPLOAD_FOLDER = '.\\server\\server_images'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -38,7 +45,7 @@ def upload_file():
             file.save(path)
             with Image.open(path) as img:
                 img.show()
-            return redirect(url_for('upload_file',
+            return redirect(url_for('results',
                                     filename=filename))
     return '''
     <!doctype html>
@@ -49,3 +56,7 @@ def upload_file():
       <input type=submit value=Upload>
     </form>
     '''
+
+@app.route('/results', methods=['GET'])
+def results():
+    return '[0,.5,.25,.1,.15]'
