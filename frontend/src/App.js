@@ -1,18 +1,16 @@
+import { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Upload from "./components/Upload";
+import Insult from "./components/Insult";
 
 function App() {
+  const [series, setSeries] = useState(null);
   return (
     <div className="App">
-      {/* <div className="card">
-        <button>UPLOAD</button>
-      </div>
-
-      <button className="upload__btn">UPLOAD</button> */}
-
       <h1 className="title">judge my fashion</h1>
-      <Upload />
+      <Upload setSeries={setSeries} />
+      {series && <Insult series={series} />}
     </div>
   );
 }

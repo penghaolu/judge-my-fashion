@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Upload.css";
 
-function Upload() {
+function Upload(props) {
   const [selectedFile, setSelectedFile] = useState(null);
 
   // On file select (from the pop up)
@@ -41,6 +41,10 @@ function Upload() {
       .get(`http://127.0.0.1:5000/results?filename=${selectedFile.name}`)
       .then((response) => {
         console.log(response);
+        let percentages = response.data.map((elem) => {
+          return Math.trunc(elem * 100);
+        });
+        props.setSeries(percentages);
       })
       .catch((error) => {
         console.log("Error:", error);

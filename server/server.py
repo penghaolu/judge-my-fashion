@@ -4,6 +4,7 @@ import os
 from PIL import Image
 import matplotlib.pyplot as plt
 from flask_cors import CORS
+import json
 
 import sys
 
@@ -76,5 +77,6 @@ def results():
     im = plt.imread(path)
 
     res = judge.get_fashion_results(im)
+    res = res.tolist()
 
-    return str(res)
+    return json.dumps(res)
