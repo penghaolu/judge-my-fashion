@@ -80,7 +80,7 @@ def crop_out_person(img, YOLO_NET=net):
     predictions, boxes, labels = getYoloPredictions(img, YOLO_NET)
     for currentPrediction in predictions:
         currentPrediction = currentPrediction[0]
-        if labels[currentPrediction] != 1:
+        if labels[currentPrediction] != 0:
             continue
 
         box = boxes[currentPrediction]
