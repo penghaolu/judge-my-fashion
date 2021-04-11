@@ -13,7 +13,7 @@ IMG_SIZE = (160, 160)
 IMG_SHAPE = IMG_SIZE + (3,)
 epochs = 10
 base_learning_rate = 0.0001
-LABELS = 1
+LABELS = 2
 batch_size = 50
 
 
