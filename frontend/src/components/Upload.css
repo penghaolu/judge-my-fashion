@@ -1,0 +1,34 @@
+.general {
+  /* background-color: #734943; */
+  /* padding: 6px; */
+  color: #3d393b;
+  text-align: center;
+}
+
+.details {
+  font-size: medium;
+}
+
+.input {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.label {
+  display: inline-block;
+  text-align: center;
+  /* margin: 20px; */
+  padding: 20px;
+  padding-top: 35px;
+  background-color: #ffffff;
+  border: solid 2px #3d393b;
+  border-radius: 12px;
+  color: #3d393b;
+  width: 400px;
+}
+
+.button {
+  font-size: 1rem;
+  margin: 10px;
+}

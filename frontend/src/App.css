@@ -1,0 +1,94 @@
+.App {
+  text-align: center;
+  padding-top: 15vh;
+  margin-bottom: 150px;
+}
+
+body {
+  margin: 0;
+  background-color: #f3f2f1;
+  color: #3d393b;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Container {
+  background: transparent;
+}
+
+.card {
+  width: 800px;
+  height: 500px;
+  border: 0em;
+  border-radius: 15px;
+  margin: auto;
+  top: 50%;
+  background-color: #f88888;
+  /* background-color: #ff2c3ece; */
+  box-shadow: 0px 0px 5px 0px #ff2c3ee9, 0 0 0 15px #ffffffeb;
+  /* box-shadow: .4rem .2rem .2rem .1rem rgba(235, 168, 161, 0.6); */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.upload__btn {
+  padding: 0.5rem 0.5rem;
+  border: 2px solid hsla(0, 0%, 100%, 0.4);
+  border-radius: 100rem;
+  width: 300px;
+  height: 100px;
+  color: rgb(158, 169, 148);
+  background-color: rgba(255, 255, 255, 0.309);
+  font-weight: 900;
+  /* background: transparent; */
+  font-size: 1rem;
+  font-family: inherit;
+  position: absolute;
+  bottom: 3rem;
+  left: 5rem;
+  transition: 0.2s;
+  cursor: pointer;
+  letter-spacing: 5px;
+}
+
+.upload__btn:hover,
+.upload__btn:focus {
+  border-color: hsla(0, 0%, 100%, 0.6);
+  transform: translateY(-0.2rem);
+}
+
+.title {
+  color: #3d393b;
+  font-size: 600%;
+}
+
+.pie {
+  align-content: center;
+  justify-content: center;
+  margin: auto;
+}

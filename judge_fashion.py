@@ -8,7 +8,7 @@ class JudgeFashion:
     def __init__(
         self,
         img_size=640,
-        model_path="./trained_model_v1.tflite",
+        model_path="./trained_modelv1.tflite",
         use_gpu=False,
         w="./yolov3.weights",
         cfg="./yolo.cfg",
@@ -16,8 +16,8 @@ class JudgeFashion:
         self.w = w
         self.cfg = cfg
 
-        self.self.IMG_SIZE = self.IMG_SIZE
-        self.tflite_interpreter = tf.lite.Interpreter(model_path=args.model_path)
+        self.IMG_SIZE = img_size
+        self.tflite_interpreter = tf.lite.Interpreter(model_path=model_path)
 
         self.tflite_interpreter.allocate_tensors()
         self.input_details = self.tflite_interpreter.get_input_details()
@@ -26,8 +26,8 @@ class JudgeFashion:
         self.net = cv2.dnn.readNet(self.w, self.cfg)
 
         if use_gpu:
-            net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
-            net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
+            self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+            self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
     def get_output_layers(self, net):
         layer_names = net.getLayerNames()
@@ -64,7 +64,7 @@ class JudgeFashion:
             frame, 0.00392, (416, 416), (0, 0, 0), True, crop=False
         )
         YOLO_NET.setInput(blob)
-        outs = YOLO_NET.forward(get_output_layers(YOLO_NET))
+        outs = YOLO_NET.forward(self.get_output_layers(YOLO_NET))
         width = frame.shape[1]
         height = frame.shape[0]
 
@@ -87,9 +87,13 @@ class JudgeFashion:
             indices = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
             return indices, boxes, class_ids
 
-    def crop_out_person(self, img, YOLO_NET=net):
-        img = fix_img_size(img, self.IMG_SIZE)
-        predictions, boxes, labels = getYoloPredictions(img, YOLO_NET)
+    def crop_out_person(self, img, YOLO_NET=None):
+
+        if YOLO_NET == None:
+            YOLO_NET = self.net
+
+        img = self.fix_img_size(img, self.IMG_SIZE)
+        predictions, boxes, labels = self.getYoloPredictions(img, YOLO_NET)
         person_bboxes = []
         for currentPrediction in predictions:
             currentPrediction = currentPrediction[0]
@@ -107,20 +111,66 @@ class JudgeFashion:
         return person_bboxes
 
     def get_fashion_results(self, image):
-        bboxes = crop_out_person(image)
+        # print("prit image", image)
+        # print("shape", image.shape)
+        # if image.shape[2] == 4:
+        # image = image[:, :, 1:]
+
+        bboxes = self.crop_out_person(image)
 
         for bbox in bboxes:
-            x, y, w, h = bbox
 
-            person_croped = image[y : y + h, x : x + w, :]
-            fix_sized_img = fix_img_size(person_croped, self.IMG_SIZE)
-            self.tflite_interpreter.set_tensor(
-                self.input_details[0]["index"], fix_sized_img
-            )
-            self.tflite_interpreter.invoke()
+            try:
+                x, y, w, h = bbox
 
-            results = np.squeeze(
-                self.tflite_interpreter.get_tensor(self.output_details[0]["index"])
-            )
-            return results
+                x2 = int(x + w)
+                y2 = int(y + h)
 
+                x = np.clip(int(x), 0, image.shape[1])
+                y = np.clip(int(y), 0, image.shape[0])
+                x2 = np.clip(int(x2), 0, image.shape[1])
+                y2 = np.clip(int(y2), 0, image.shape[0])
+
+                person_croped = image[int(y) : y2, int(x) : x2, :]
+
+                if x == x2 or y == y2:
+                    person_croped = image
+
+                fix_sized_img = np.array(
+                    [self.fix_img_size(person_croped, 160)]
+                ).astype(np.float32)
+                # print(fix_sized_img.shape)
+                self.tflite_interpreter.set_tensor(
+                    self.input_details[0]["index"], fix_sized_img
+                )
+                self.tflite_interpreter.invoke()
+
+                results = np.squeeze(
+                    self.tflite_interpreter.get_tensor(self.output_details[0]["index"])
+                )
+                return results
+            except:
+                print(bbox, "failed")
+
+        return [0, 0, 0]
+
+
+import matplotlib.pyplot as plt
+
+
+def main():
+    # testing
+    img = plt.imread("server/server_images/iu.png")
+    jf = JudgeFashion(
+        model_path="configs/5_class_trained_modelv2_final.tflite",
+        use_gpu=False,
+        w="configs/yolov3.weights",
+        cfg="configs/yolo.cfg",
+    )
+    res = jf.get_fashion_results(img)
+
+    print(res)
+
+
+if __name__ == "__main__":
+    main()
