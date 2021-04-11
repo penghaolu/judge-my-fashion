@@ -9,7 +9,7 @@ class JudgeFashion():
         self.cfg = cfg
 
         self.self.IMG_SIZE = self.IMG_SIZE
-        self.tflite_interpreter = tf.lite.Interpreter(model_path=args.model_path)
+        self.tflite_interpreter = tf.lite.Interpreter(model_path=model_path)
     
         self.tflite_interpreter.allocate_tensors()
         self.input_details = self.tflite_interpreter.get_input_details()

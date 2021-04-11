@@ -24,7 +24,7 @@ def get_output_layers(net):
 	return output_layers
 
 
-def fix_img_size(im, desired_size=460):
+def fix_img_size(im, desired_size=640):
     old_size = im.shape[:2] # old_size is in (height, width) format
 
     ratio = float(desired_size)/max(old_size)
