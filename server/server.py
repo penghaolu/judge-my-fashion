@@ -2,13 +2,19 @@ from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 import os
 from PIL import Image
+import matplotlib.pyplot as plt
 
 import sys
 sys.path.insert(0, '../')
 
-# from judge_fashion import JudgeFashion
+from judge_fashion import JudgeFashion
 
-# judge = JudgeFashion()
+judge = JudgeFashion(
+    img_size=160,
+    model_path='./configs/trained_modelv1.tflite',
+    w='./configs/yolov3.weights',
+    cfg='./configs/yolo.cfg'
+)
 
 UPLOAD_FOLDER = '.\\server\\server_images'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -59,4 +65,10 @@ def upload_file():
 
 @app.route('/results', methods=['GET'])
 def results():
-    return '[0,.5,.25,.1,.15]'
+    filename = request.args.get('filename')
+    path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    im = plt.imread(path)
+
+    res = judge.get_fashion_results(im)
+
+    return str(res)
