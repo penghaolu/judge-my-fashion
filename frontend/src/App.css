@@ -5,7 +5,8 @@
 
 body {
   margin: 0;
-  background-color: #f58bc57e;
+  background-color: #f3f2f1;
+  color: #3d393b;
 }
 
 .App-logo {
@@ -55,7 +56,7 @@ body {
 }
 
 .upload__btn {
-  padding: .5rem .5rem;
+  padding: 0.5rem 0.5rem;
   border: 2px solid hsla(0, 0%, 100%, 0.4);
   border-radius: 100rem;
   width: 300px;
@@ -72,11 +73,15 @@ body {
   transition: 0.2s;
   cursor: pointer;
   letter-spacing: 5px;
-  
 }
 
 .upload__btn:hover,
 .upload__btn:focus {
   border-color: hsla(0, 0%, 100%, 0.6);
   transform: translateY(-0.2rem);
+}
+
+.title {
+  color: #3d393b;
+  font-size: 600%;
 }
