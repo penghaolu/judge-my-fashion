@@ -9,6 +9,10 @@ function App() {
           UPLOAD
         </button>
       </div>
+
+      <button className="upload__btn">
+        UPLOAD
+      </button>
     </div>
   );
 }
