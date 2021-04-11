@@ -1,0 +1,31 @@
+
+
+
+.bubble {
+    box-shadow: 0px 0px 15px 5px #e68282, 0 0 0 15px #f2a1a160;
+    width: 250px;
+    height: 100px;
+    color: white;
+    border-radius: 100px;
+    font-family: inherit;
+    margin: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #f55d6cb1;
+}
+
+p {
+    margin: 30px;
+    font-size: 1.5rem;
+}
+
+.type {
+    color: white;
+}
+
+.percentage {
+    color: white;
+    padding-left: 30px;
+}
