@@ -5,14 +5,15 @@ import random
 import matplotlib.pyplot as plt
 
 a = argparse.ArgumentParser()
-a.add_argument("--path", help="path of db")
+a.add_argument("--path", default="../../bitcamp2021db", help="path of db")
 args = a.parse_args()
 
 
-IMG_SHAPE = (160, 160) + (3,)
+IMG_SIZE = (160, 160)
+IMG_SHAPE = IMG_SIZE + (3,)
 epochs=10
 base_learning_rate = 0.0001
-LABELS = 3
+LABELS = 1
 batch_size=50
 
 
@@ -21,20 +22,20 @@ seed = int(random.random() * 100)
 directory = args.path
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(
     directory, labels="inferred", label_mode='categorical',
-    color_mode='rgb', batch_size=batch_size, image_size=IMG_SHAPE, shuffle=True, seed=seed,
+    color_mode='rgb', batch_size=batch_size, image_size=IMG_SIZE, shuffle=True, seed=seed,
     validation_split=0.1, subset="training", interpolation='bilinear', follow_links=False
 )
 
 val_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    directory, labels="inferred", label_mode='binary',
-    color_mode='rgb',image_size=IMG_SHAPE, seed=seed,
+    directory, labels="inferred", label_mode='categorical',
+    color_mode='rgb',image_size=IMG_SIZE, seed=seed,
     validation_split=0.1, subset="validation"
 )
 
 
-AUTOTUNE = tf.data.AUTOTUNE
+AUTOTUNE = tf.data.experimental.AUTOTUNE
 train_dataset = train_ds.prefetch(buffer_size=AUTOTUNE)
-validation_dataset = validation_dataset.prefetch(buffer_size=AUTOTUNE)
+validation_dataset = val_ds.prefetch(buffer_size=AUTOTUNE)
 test_dataset = val_ds.prefetch(buffer_size=AUTOTUNE)
 
 preprocess_input = tf.keras.applications.mobilenet_v2.preprocess_input
@@ -71,8 +72,8 @@ model = tf.keras.Model(inputs, outputs)
 
 
 model.compile(optimizer=tf.keras.optimizers.Adam(lr=base_learning_rate),
-              loss=tf.keras.losses.categorical_crossentropy(),
-              metrics=['accuracy'])
+              loss='categorical_crossentropy',
+              metrics=['accuracy', 'loss'])
 
 print(model.summary())
 history = model.fit(train_ds,

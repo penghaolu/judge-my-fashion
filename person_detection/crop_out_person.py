@@ -7,15 +7,16 @@ parser.add_argument('-u', '--use_gpu', default=False, action='store_true', help=
 
 args = parser.parse_args()
 
-test_img = "person.jpg"
 w = "./yolov3.weights"
 cfg = "./yolo.cfg"
+
 
 net = cv2.dnn.readNet(w,cfg)
 if args.use_gpu:
     print('Using GPU')
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
     net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
+
 
 def get_output_layers(net):
 	layer_names = net.getLayerNames()
@@ -74,47 +75,18 @@ def getYoloPredictions(frame, YOLO_NET):
         return indices, boxes, class_ids
 
 
+def crop_out_person(img, YOLO_NET=net):
+    img = fix_img_size(img, 640)
+    predictions, boxes, labels = getYoloPredictions(img, YOLO_NET)
+    for currentPrediction in predictions:
+        currentPrediction = currentPrediction[0]
+        if labels[currentPrediction] != 1:
+            continue
 
-
-img = cv2.imread("../../bitcamp2021db/streetwear/22.jpg")
-img = fix_img_size(img, 640)
-#img = cv2.resize(img, (int(w * 0.5), int(h * 0.5)), interpolation = cv2.INTER_LINEAR) 
-#img = cv2.resize(img, (640, 640))
-#gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-
-predictions, boxes, labels = getYoloPredictions(img, net)
-print(predictions, boxes, labels)
-for currentPrediction in predictions:
-    currentPrediction = currentPrediction[0]
-    if labels[currentPrediction] != 1:
-        continue
-
-    box = boxes[currentPrediction]
-    x = box[0]
-    y = box[1]
-    w = box[2]
-    h = box[3]
-    label = str(labels[currentPrediction])
-
-    cv2.rectangle(
-        img,
-        (round(x), round(y)),
-        (round(x+w),round(y+h)),
-        (255,0,0),
-        2
-    )
-    
-    cv2.putText(
-        img,
-        label,
-        (round(x), round(y)),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        2,
-        (255,0,0),
-        2,
-        cv2.LINE_AA,
-        )
-
-cv2.imshow("a", img)
-cv2.waitKey(0)
+        box = boxes[currentPrediction]
+        x = box[0]
+        y = box[1]
+        w = box[2]
+        h = box[3]
+        label = str(labels[currentPrediction])
+        return ([x,y,w,h])
