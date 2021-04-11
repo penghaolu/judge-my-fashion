@@ -13,11 +13,17 @@ function Upload() {
 
   // On file upload (click the upload button)
   function onFileUpload() {
+    // const data = new FormData();
+    // data.append('file', this.uploadInput.files[0]);
+    // data.append('filename', this.fileName.value);
+
     // Create an object of formData
     const formData = new FormData();
 
     // Update the formData object
-    formData.append("myFile", selectedFile, selectedFile.name);
+    // formData.append("myFile", selectedFile, selectedFile.name);
+    formData.append("file", selectedFile);
+    formData.append("filename", selectedFile.name);
 
     // Details of the uploaded file
     console.log(selectedFile);
@@ -25,10 +31,10 @@ function Upload() {
     // Request made to the backend api
     // Send formData object
     axios
-      .post("/upload", formData)
+      .post("http://127.0.0.1:5000/upload", formData)
       .then((response) => {
         console.log(response);
-        getResults();
+        // getResults();
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -37,7 +43,7 @@ function Upload() {
 
   function getResults() {
     axios
-      .get("/results")
+      .get(`http://127.0.0.1:5000/results?filename=${selectedFile.name}`)
       .then((response) => {
         console.log(response);
       })
@@ -76,12 +82,14 @@ function Upload() {
       <h3>feed me ur fit pics</h3>
       <div>
         <label className="label">
-          click here to upload
+          click here to pick fit pic
           <input className="input" type="file" onChange={onFileChange} />
         </label>
       </div>
       {fileData()}
-      <button onClick={onFileUpload}>i'm ready, roast me</button>
+      <button onClick={onFileUpload}>upload my ugly photo please</button>
+      <br />
+      <button onClick={getResults}>i'm ready, roast me</button>
     </div>
   );
 }

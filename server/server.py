@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 from PIL import Image
 import matplotlib.pyplot as plt
+from flask_cors import CORS
 
 import sys
 
@@ -12,15 +13,17 @@ from judge_fashion import JudgeFashion
 
 judge = JudgeFashion(
     img_size=160,
-    model_path="./configs/trained_modelv1.tflite",
+    model_path="./configs/5_class_trained_modelv2_final.tflite",
     w="./configs/yolov3.weights",
     cfg="./configs/yolo.cfg",
 )
 
-UPLOAD_FOLDER = ".\\server\\server_images"
+UPLOAD_FOLDER = "./server/server_images"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 app = Flask(__name__)
+CORS(app)
+app.secret_key = "super secret key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
@@ -74,4 +77,4 @@ def results():
 
     res = judge.get_fashion_results(im)
 
-    return res
+    return str(res)
