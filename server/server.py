@@ -19,7 +19,7 @@ judge = JudgeFashion(
     cfg="./configs/yolo.cfg",
 )
 
-UPLOAD_FOLDER = "./server/server_images"
+UPLOAD_FOLDER = "./server_images"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 app = Flask(__name__)

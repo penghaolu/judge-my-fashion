@@ -2,7 +2,7 @@ import React from "react";
 import "./Bubble.css";
 
 const Bubble = (props) => {
-  const { width = 150, hegiht = 150, type = "test", percentage = 0 } = props;
+  const { width = 150, height = 150, type = "test", percentage = 0 } = props;
 
   return (
     <>
