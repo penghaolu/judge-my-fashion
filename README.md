@@ -7,6 +7,8 @@ View the demo: https://www.youtube.com/watch?v=agqwDCULiO4
 
 Built with: TensorFlow, YOLOv3, React, Flask
 
+Winner of Bitcamp 2021 for Most Entertaining Hack: https://devpost.com/software/judge-my-fashion
+
 
 
 # MacOS First Time Setup Instructions
