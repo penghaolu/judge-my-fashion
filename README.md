@@ -57,6 +57,7 @@ If successful, you should see the following:
 ## Start Frontend
 Open a new terminal and navigate into `judge-my-fashion/frontend/`. From there, run:
 
+    yarn install
     yarn start
     
 If successful, the working web app should automatically open in your default browser.
