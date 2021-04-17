@@ -16,7 +16,7 @@ judge = JudgeFashion(
     img_size=160,
     model_path="./configs/5_class_trained_modelv2_final.tflite",
     w="./configs/yolov3.weights",
-    cfg="./configs/yolo.cfg",
+    cfg="./configs/yolov3.cfg",
 )
 
 UPLOAD_FOLDER = "./server_images"
