@@ -57,8 +57,8 @@ If successful, you should see the following:
 ## Start Frontend
 Open a new terminal and activate your conda environment with `conda activate judgemyfashion`. Navigate into `judge-my-fashion/frontend/`. From there, run:
 
-    yarn install
-    yarn start
+    npm install
+    npm start
     
 If successful, the working web app should automatically open in your default browser.
 
