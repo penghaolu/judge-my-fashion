@@ -36,10 +36,10 @@ If properly installed, you should now see `(judgemyfashion)` in front of your sh
 
 
 # Hosting Instructions
-If not already activated, activate your conda environment with `conda activate judgemyfashion`.
+
 
 ## Start Flask server
-Open a new terminal and navigate into `judge-my-fashion/server/`. From there, run:
+Open a new terminal and activate your conda environment with `conda activate judgemyfashion`. Navigate into `judge-my-fashion/server/`. From there, run:
 
     export FLASK_APP=server.py
     python -m flask run
@@ -55,7 +55,7 @@ If successful, you should see the following:
      * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
 ## Start Frontend
-Open a new terminal and navigate into `judge-my-fashion/frontend/`. From there, run:
+Open a new terminal and activate your conda environment with `conda activate judgemyfashion`. Navigate into `judge-my-fashion/frontend/`. From there, run:
 
     yarn install
     yarn start
